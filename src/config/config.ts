@@ -12,13 +12,24 @@ const computerSchema = z.object({
     registeredAt: z.string().datetime(),
 });
 
+const registeredDriveSchema = z.object({
+    id: z.string().uuid(),
+    publicId: z.string().nullable(),
+    alias: z.string().min(1),
+    rootPath: z.string().min(1),
+    category: z.enum(["MOVIES", "COURSES", "MIXED"]),
+    registeredAt: z.string().datetime(),
+});
+
 const configSchema = z.object({
     version: z.literal(1),
     computer: computerSchema.nullable(),
+    drives: z.array(registeredDriveSchema).default([]),
 });
 
 export type TrackItDownConfig = z.infer<typeof configSchema>;
 export type RegisteredComputer = z.infer<typeof computerSchema>;
+export type RegisteredDrive = z.infer<typeof registeredDriveSchema>;
 
 const configDirectory = join(homedir(), ".trackitdown");
 const configPath = join(configDirectory, "config.json");
@@ -27,6 +38,7 @@ const temporaryConfigPath = join(configDirectory, "config.tmp.json");
 const defaultConfig: TrackItDownConfig = {
     version: 1,
     computer: null,
+    drives: [],
 };
 
 export const loadConfig = async (): Promise<TrackItDownConfig> => {

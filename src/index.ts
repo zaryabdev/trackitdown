@@ -3,6 +3,7 @@
 import { Command } from "commander";
 
 import { registerComputerCommands } from "./commands/computer.js";
+import { registerDriveCommands } from "./commands/drive.js";
 import { printBrand, ui } from "./ui.js";
 
 const program = new Command();
@@ -25,6 +26,7 @@ program.configureOutput({
 });
 
 registerComputerCommands(program);
+registerDriveCommands(program);
 
 try {
     await program.parseAsync();
