@@ -4,6 +4,7 @@ import { Command } from "commander";
 
 import { registerComputerCommands } from "./commands/computer.js";
 import { registerDriveCommands } from "./commands/drive.js";
+import { registerScanCommand } from "./commands/scan.js";
 import { printBrand, ui } from "./ui.js";
 
 const program = new Command();
@@ -27,6 +28,7 @@ program.configureOutput({
 
 registerComputerCommands(program);
 registerDriveCommands(program);
+registerScanCommand(program);
 
 try {
     await program.parseAsync();
