@@ -1,5 +1,9 @@
 {
+    "name": "trackitdown",
     "type": "module",
+    "bin": {
+        "trackitdown": "./dist/index.js"
+    },
     "scripts": {
         "dev": "tsx src/index.ts",
         "build": "tsc",
@@ -10,5 +14,8 @@
         "@types/node": "^26.1.1",
         "tsx": "^4.23.1",
         "typescript": "^7.0.2"
+    },
+    "dependencies": {
+        "commander": "^15.0.0"
     }
 }
