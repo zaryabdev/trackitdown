@@ -1,6 +1,7 @@
 {
-    "name": "trackitdown",
+    "name": "@trackitdown/cli",
     "version": "0.1.0",
+    "private": true,
     "description": "Searchable metadata snapshots of your drives",
     "type": "module",
     "bin": {
