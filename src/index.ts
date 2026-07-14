@@ -2,19 +2,39 @@
 
 import { Command } from "commander";
 
+import { registerComputerCommands } from "./commands/computer.js";
+import { printBrand, ui } from "./ui.js";
+
 const program = new Command();
 
 program
-    .name("trackitdown")
+    .name("tid")
     .description("Create searchable snapshots of your drives")
-    .version("0.1.0");
+    .version("0.1.0")
+    .showHelpAfterError();
 
-program
-    .command("hello")
-    .description("Verify that the TrackItDown CLI is working")
-    .argument("[name]", "name to greet", "User")
-    .action((name: string) => {
-        console.log(`Hello ${name}, TrackItDown is ready.`);
-    });
+program.addHelpText("beforeAll", () => {
+    printBrand();
+    return "";
+});
 
-program.parse();
+program.configureOutput({
+    outputError: (message, write) => {
+        write(ui.error(message));
+    },
+});
+
+registerComputerCommands(program);
+
+try {
+    await program.parseAsync();
+} catch (error) {
+    const message =
+        error instanceof Error
+            ? error.message
+            : "An unexpected error occurred.";
+
+    console.error();
+    console.error(ui.error(`Error: ${message}`));
+    process.exitCode = 1;
+}
